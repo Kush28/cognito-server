@@ -1,0 +1,8 @@
+extends layout
+
+block content
+  h1= appName
+  p Welcome to #{appName}
+  img(src="https://res.cloudinary.com/doxldod5y/image/upload/v1595606685/icons/Infinity-1s-200px_un8mjw.svg" alt="loading")
+  script.
+   window.opener.postMessage({token: document.title}, "*");
