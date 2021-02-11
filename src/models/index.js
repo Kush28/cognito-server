@@ -1,3 +1,4 @@
 import { User } from './user.model';
+import { Message } from './message.model';
 
-export default { User };
+module.exports = { User, Message };

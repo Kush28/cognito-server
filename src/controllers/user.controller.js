@@ -1,7 +1,7 @@
-import models from '../models';
+import { User } from '../models';
 
 exports.create = ({ externalId, externalProvider, name, avatar }) => {
-    const user = new models.User({
+    const user = new User({
         externalId,
         externalProvider,
         name,
@@ -10,10 +10,10 @@ exports.create = ({ externalId, externalProvider, name, avatar }) => {
     return user.save();
 };
 
-exports.findAll = () => models.User.find();
+exports.findAll = () => User.find();
 
 exports.findByExternal = async (extID, provider) => {
-    const user = await models.User.findOne({
+    const user = await User.findOne({
         externalId: extID,
         externalProvider: provider,
     });
@@ -22,6 +22,6 @@ exports.findByExternal = async (extID, provider) => {
     return { id, externalId, externalProvider, name, avatar, notes };
 };
 
-exports.findById = (id) => models.User.findById(id);
+exports.findById = (id) => User.findById(id);
 
 exports.delete = () => {};

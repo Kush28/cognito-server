@@ -4,10 +4,9 @@ import { composeWithMongoose } from 'graphql-compose-mongoose';
 
 export const MessageSchema = new Schema(
     {
-        userId: {
+        senderId: {
             type: String,
             required: true,
-            unique: true,
         },
         content: {
             type: String,

@@ -44,6 +44,7 @@
     "graphql-middleware": "^6.0.3",
     "graphql-tools": "^7.0.2",
     "helmet": "^4.4.1",
+    "http": "0.0.1-security",
     "http-errors": "^1.8.0",
     "jade": "^1.11.0",
     "jsonwebtoken": "^8.5.1",

@@ -1,10 +1,10 @@
 import express from 'express';
 import User from '../controllers/user.controller';
-import authMiddleware from '../middlewares/auth.middleware';
+import { authRestMiddleware } from '../middlewares/auth.middleware';
 
 const router = express.Router();
 
-router.use(authMiddleware);
+router.use(authRestMiddleware);
 
 router.get('/auth', async (req, res, next) => {
     try {
