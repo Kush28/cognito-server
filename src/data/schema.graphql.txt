@@ -1,0 +1,797 @@
+type Query {
+  MessageById(_id: MongoID!): Message
+  MessageByIds(_ids: [MongoID!]!, limit: Int = 100, sort: SortFindByIdsMessageInput): [Message!]!
+  MessageOne(
+    """Filter by fields"""
+    filter: FilterFindOneMessageInput
+    skip: Int
+    sort: SortFindOneMessageInput
+  ): Message
+  MessageMany(
+    """Filter by fields"""
+    filter: FilterFindManyMessageInput
+    skip: Int
+    limit: Int = 100
+    sort: SortFindManyMessageInput
+  ): [Message!]!
+  MessageCount(
+    """Filter by fields"""
+    filter: FilterCountMessageInput
+  ): Int
+  MessageConnection(
+    """Forward pagination argument for returning at most first edges"""
+    first: Int
+
+    """Forward pagination argument for returning at most first edges"""
+    after: String
+
+    """Backward pagination argument for returning at most last edges"""
+    last: Int
+
+    """Backward pagination argument for returning at most last edges"""
+    before: String
+
+    """Filter by fields"""
+    filter: FilterFindManyMessageInput
+
+    """Sort argument for data ordering"""
+    sort: SortConnectionMessageEnum = _ID_DESC
+  ): MessageConnection
+  MessagePagination(
+    """Page number for displaying"""
+    page: Int
+
+    """"""
+    perPage: Int = 20
+
+    """Filter by fields"""
+    filter: FilterFindManyMessageInput
+    sort: SortFindManyMessageInput
+  ): MessagePagination
+}
+
+type Message {
+  userId: String!
+  content: String!
+  _id: MongoID!
+  updatedAt: Date
+  createdAt: Date
+}
+
+"""
+The `ID` scalar type represents a unique MongoDB identifier in collection. MongoDB by default use 12-byte ObjectId value (https://docs.mongodb.com/manual/reference/bson-types/#objectid). But MongoDB also may accepts string or integer as correct values for _id field.
+"""
+scalar MongoID
+
+scalar Date
+
+enum SortFindByIdsMessageInput {
+  _ID_ASC
+  _ID_DESC
+  USERID_ASC
+  USERID_DESC
+  CREATEDAT_ASC
+  CREATEDAT_DESC
+  CREATEDAT__UPDATEDAT_ASC
+  CREATEDAT__UPDATEDAT_DESC
+}
+
+""""""
+input FilterFindOneMessageInput {
+  userId: String
+  content: String
+  _id: MongoID
+  updatedAt: Date
+  createdAt: Date
+
+  """List of *indexed* fields that can be filtered via operators."""
+  _operators: FilterFindOneMessageOperatorsInput
+  OR: [FilterFindOneMessageInput!]
+  AND: [FilterFindOneMessageInput!]
+}
+
+"""For performance reason this type contains only *indexed* fields."""
+input FilterFindOneMessageOperatorsInput {
+  userId: FilterFindOneMessageUserIdOperatorsInput
+  _id: FilterFindOneMessage_idOperatorsInput
+  createdAt: FilterFindOneMessageCreatedAtOperatorsInput
+}
+
+input FilterFindOneMessageUserIdOperatorsInput {
+  gt: String
+  gte: String
+  lt: String
+  lte: String
+  ne: String
+  in: [String]
+  nin: [String]
+  regex: RegExpAsString
+  exists: Boolean
+}
+
+"""
+The string representation of JavaScript regexp. You may provide it with flags "/^abc.*/i" or without flags like "^abc.*". More info about RegExp characters and flags: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions
+"""
+scalar RegExpAsString @specifiedBy(url: "http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-262.pdf")
+
+input FilterFindOneMessage_idOperatorsInput {
+  gt: MongoID
+  gte: MongoID
+  lt: MongoID
+  lte: MongoID
+  ne: MongoID
+  in: [MongoID]
+  nin: [MongoID]
+  exists: Boolean
+}
+
+input FilterFindOneMessageCreatedAtOperatorsInput {
+  gt: Date
+  gte: Date
+  lt: Date
+  lte: Date
+  ne: Date
+  in: [Date]
+  nin: [Date]
+  exists: Boolean
+}
+
+enum SortFindOneMessageInput {
+  _ID_ASC
+  _ID_DESC
+  USERID_ASC
+  USERID_DESC
+  CREATEDAT_ASC
+  CREATEDAT_DESC
+  CREATEDAT__UPDATEDAT_ASC
+  CREATEDAT__UPDATEDAT_DESC
+}
+
+""""""
+input FilterFindManyMessageInput {
+  userId: String
+  content: String
+  _id: MongoID
+  updatedAt: Date
+  createdAt: Date
+
+  """List of *indexed* fields that can be filtered via operators."""
+  _operators: FilterFindManyMessageOperatorsInput
+  OR: [FilterFindManyMessageInput!]
+  AND: [FilterFindManyMessageInput!]
+}
+
+"""For performance reason this type contains only *indexed* fields."""
+input FilterFindManyMessageOperatorsInput {
+  userId: FilterFindManyMessageUserIdOperatorsInput
+  _id: FilterFindManyMessage_idOperatorsInput
+  createdAt: FilterFindManyMessageCreatedAtOperatorsInput
+}
+
+input FilterFindManyMessageUserIdOperatorsInput {
+  gt: String
+  gte: String
+  lt: String
+  lte: String
+  ne: String
+  in: [String]
+  nin: [String]
+  regex: RegExpAsString
+  exists: Boolean
+}
+
+input FilterFindManyMessage_idOperatorsInput {
+  gt: MongoID
+  gte: MongoID
+  lt: MongoID
+  lte: MongoID
+  ne: MongoID
+  in: [MongoID]
+  nin: [MongoID]
+  exists: Boolean
+}
+
+input FilterFindManyMessageCreatedAtOperatorsInput {
+  gt: Date
+  gte: Date
+  lt: Date
+  lte: Date
+  ne: Date
+  in: [Date]
+  nin: [Date]
+  exists: Boolean
+}
+
+enum SortFindManyMessageInput {
+  _ID_ASC
+  _ID_DESC
+  USERID_ASC
+  USERID_DESC
+  CREATEDAT_ASC
+  CREATEDAT_DESC
+  CREATEDAT__UPDATEDAT_ASC
+  CREATEDAT__UPDATEDAT_DESC
+}
+
+""""""
+input FilterCountMessageInput {
+  userId: String
+  content: String
+  _id: MongoID
+  updatedAt: Date
+  createdAt: Date
+
+  """List of *indexed* fields that can be filtered via operators."""
+  _operators: FilterCountMessageOperatorsInput
+  OR: [FilterCountMessageInput!]
+  AND: [FilterCountMessageInput!]
+}
+
+"""For performance reason this type contains only *indexed* fields."""
+input FilterCountMessageOperatorsInput {
+  userId: FilterCountMessageUserIdOperatorsInput
+  _id: FilterCountMessage_idOperatorsInput
+  createdAt: FilterCountMessageCreatedAtOperatorsInput
+}
+
+input FilterCountMessageUserIdOperatorsInput {
+  gt: String
+  gte: String
+  lt: String
+  lte: String
+  ne: String
+  in: [String]
+  nin: [String]
+  regex: RegExpAsString
+  exists: Boolean
+}
+
+input FilterCountMessage_idOperatorsInput {
+  gt: MongoID
+  gte: MongoID
+  lt: MongoID
+  lte: MongoID
+  ne: MongoID
+  in: [MongoID]
+  nin: [MongoID]
+  exists: Boolean
+}
+
+input FilterCountMessageCreatedAtOperatorsInput {
+  gt: Date
+  gte: Date
+  lt: Date
+  lte: Date
+  ne: Date
+  in: [Date]
+  nin: [Date]
+  exists: Boolean
+}
+
+"""A connection to a list of items."""
+type MessageConnection {
+  """Total object count."""
+  count: Int!
+
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """Information to aid in pagination."""
+  edges: [MessageEdge!]!
+}
+
+"""Information about pagination in a connection."""
+type PageInfo {
+  """When paginating forwards, are there more items?"""
+  hasNextPage: Boolean!
+
+  """When paginating backwards, are there more items?"""
+  hasPreviousPage: Boolean!
+
+  """When paginating backwards, the cursor to continue."""
+  startCursor: String
+
+  """When paginating forwards, the cursor to continue."""
+  endCursor: String
+}
+
+"""An edge in a connection."""
+type MessageEdge {
+  """The item at the end of the edge"""
+  node: Message!
+
+  """A cursor for use in pagination"""
+  cursor: String!
+}
+
+enum SortConnectionMessageEnum {
+  _ID_DESC
+  _ID_ASC
+  USERID_DESC
+  USERID_ASC
+}
+
+"""List of items with pagination."""
+type MessagePagination {
+  """Total object count."""
+  count: Int
+
+  """Array of objects."""
+  items: [Message!]
+
+  """Information to aid in pagination."""
+  pageInfo: PaginationInfo!
+}
+
+type PaginationInfo {
+  currentPage: Int!
+  perPage: Int!
+  pageCount: Int
+  itemCount: Int
+  hasNextPage: Boolean
+  hasPreviousPage: Boolean
+}
+
+type Mutation {
+  """
+  Create one document with mongoose defaults, setters, hooks and validation
+  """
+  MessageCreateOne(record: CreateOneMessageInput!): CreateOneMessagePayload
+
+  """
+  Creates Many documents with mongoose defaults, setters, hooks and validation
+  """
+  MessageCreateMany(records: [CreateManyMessageInput!]!): CreateManyMessagePayload
+
+  """
+  Update one document: 1) Retrieve one document by findById. 2) Apply updates to mongoose document. 3) Mongoose applies defaults, setters, hooks and validation. 4) And save it.
+  """
+  MessageUpdateById(_id: MongoID!, record: UpdateByIdMessageInput!): UpdateByIdMessagePayload
+
+  """
+  Update one document: 1) Retrieve one document via findOne. 2) Apply updates to mongoose document. 3) Mongoose applies defaults, setters, hooks and validation. 4) And save it.
+  """
+  MessageUpdateOne(
+    record: UpdateOneMessageInput!
+
+    """Filter by fields"""
+    filter: FilterUpdateOneMessageInput
+    sort: SortUpdateOneMessageInput
+    skip: Int
+  ): UpdateOneMessagePayload
+
+  """
+  Update many documents without returning them: Use Query.update mongoose method. Do not apply mongoose defaults, setters, hooks and validation. 
+  """
+  MessageUpdateMany(
+    record: UpdateManyMessageInput!
+
+    """Filter by fields"""
+    filter: FilterUpdateManyMessageInput
+    sort: SortUpdateManyMessageInput
+    skip: Int
+    limit: Int = 100
+  ): UpdateManyMessagePayload
+
+  """
+  Remove one document: 1) Retrieve one document and remove with hooks via findByIdAndRemove. 2) Return removed document.
+  """
+  MessageRemoveById(_id: MongoID!): RemoveByIdMessagePayload
+
+  """
+  Remove one document: 1) Remove with hooks via findOneAndRemove. 2) Return removed document.
+  """
+  MessageRemoveOne(
+    """Filter by fields"""
+    filter: FilterRemoveOneMessageInput
+    sort: SortRemoveOneMessageInput
+  ): RemoveOneMessagePayload
+
+  """
+  Remove many documents without returning them: Use Query.remove mongoose method. Do not apply mongoose defaults, setters, hooks and validation. 
+  """
+  MessageRemoveMany(
+    """Filter by fields"""
+    filter: FilterRemoveManyMessageInput!
+    limit: Int = 100
+  ): RemoveManyMessagePayload
+}
+
+type CreateOneMessagePayload {
+  """Document ID"""
+  recordId: MongoID
+
+  """Created document"""
+  record: Message
+
+  """
+  Error that may occur during operation. If you request this field in GraphQL query, you will receive typed error in payload; otherwise error will be provided in root `errors` field of GraphQL response.
+  """
+  error: ErrorInterface
+}
+
+interface ErrorInterface {
+  """Generic error message"""
+  message: String
+}
+
+""""""
+input CreateOneMessageInput {
+  userId: String!
+  content: String!
+  updatedAt: Date
+  createdAt: Date
+}
+
+type CreateManyMessagePayload {
+  """Documents IDs"""
+  recordIds: [MongoID!]!
+
+  """Created documents"""
+  records: [Message!]
+
+  """Number of created documents"""
+  createdCount: Int!
+
+  """
+  Error that may occur during operation. If you request this field in GraphQL query, you will receive typed error in payload; otherwise error will be provided in root `errors` field of GraphQL response.
+  """
+  error: ErrorInterface
+}
+
+""""""
+input CreateManyMessageInput {
+  userId: String!
+  content: String!
+  updatedAt: Date
+  createdAt: Date
+}
+
+type UpdateByIdMessagePayload {
+  """Document ID"""
+  recordId: MongoID
+
+  """Updated document"""
+  record: Message
+
+  """
+  Error that may occur during operation. If you request this field in GraphQL query, you will receive typed error in payload; otherwise error will be provided in root `errors` field of GraphQL response.
+  """
+  error: ErrorInterface
+}
+
+""""""
+input UpdateByIdMessageInput {
+  userId: String
+  content: String
+  updatedAt: Date
+  createdAt: Date
+}
+
+type UpdateOneMessagePayload {
+  """Document ID"""
+  recordId: MongoID
+
+  """Updated document"""
+  record: Message
+
+  """
+  Error that may occur during operation. If you request this field in GraphQL query, you will receive typed error in payload; otherwise error will be provided in root `errors` field of GraphQL response.
+  """
+  error: ErrorInterface
+}
+
+""""""
+input UpdateOneMessageInput {
+  userId: String
+  content: String
+  updatedAt: Date
+  createdAt: Date
+}
+
+""""""
+input FilterUpdateOneMessageInput {
+  userId: String
+  content: String
+  _id: MongoID
+  updatedAt: Date
+  createdAt: Date
+
+  """List of *indexed* fields that can be filtered via operators."""
+  _operators: FilterUpdateOneMessageOperatorsInput
+  OR: [FilterUpdateOneMessageInput!]
+  AND: [FilterUpdateOneMessageInput!]
+}
+
+"""For performance reason this type contains only *indexed* fields."""
+input FilterUpdateOneMessageOperatorsInput {
+  userId: FilterUpdateOneMessageUserIdOperatorsInput
+  _id: FilterUpdateOneMessage_idOperatorsInput
+  createdAt: FilterUpdateOneMessageCreatedAtOperatorsInput
+}
+
+input FilterUpdateOneMessageUserIdOperatorsInput {
+  gt: String
+  gte: String
+  lt: String
+  lte: String
+  ne: String
+  in: [String]
+  nin: [String]
+  regex: RegExpAsString
+  exists: Boolean
+}
+
+input FilterUpdateOneMessage_idOperatorsInput {
+  gt: MongoID
+  gte: MongoID
+  lt: MongoID
+  lte: MongoID
+  ne: MongoID
+  in: [MongoID]
+  nin: [MongoID]
+  exists: Boolean
+}
+
+input FilterUpdateOneMessageCreatedAtOperatorsInput {
+  gt: Date
+  gte: Date
+  lt: Date
+  lte: Date
+  ne: Date
+  in: [Date]
+  nin: [Date]
+  exists: Boolean
+}
+
+enum SortUpdateOneMessageInput {
+  _ID_ASC
+  _ID_DESC
+  USERID_ASC
+  USERID_DESC
+  CREATEDAT_ASC
+  CREATEDAT_DESC
+  CREATEDAT__UPDATEDAT_ASC
+  CREATEDAT__UPDATEDAT_DESC
+}
+
+type UpdateManyMessagePayload {
+  """Affected documents number"""
+  numAffected: Int
+
+  """
+  Error that may occur during operation. If you request this field in GraphQL query, you will receive typed error in payload; otherwise error will be provided in root `errors` field of GraphQL response.
+  """
+  error: ErrorInterface
+}
+
+""""""
+input UpdateManyMessageInput {
+  userId: String
+  content: String
+  updatedAt: Date
+  createdAt: Date
+}
+
+""""""
+input FilterUpdateManyMessageInput {
+  userId: String
+  content: String
+  _id: MongoID
+  updatedAt: Date
+  createdAt: Date
+
+  """List of *indexed* fields that can be filtered via operators."""
+  _operators: FilterUpdateManyMessageOperatorsInput
+  OR: [FilterUpdateManyMessageInput!]
+  AND: [FilterUpdateManyMessageInput!]
+}
+
+"""For performance reason this type contains only *indexed* fields."""
+input FilterUpdateManyMessageOperatorsInput {
+  userId: FilterUpdateManyMessageUserIdOperatorsInput
+  _id: FilterUpdateManyMessage_idOperatorsInput
+  createdAt: FilterUpdateManyMessageCreatedAtOperatorsInput
+}
+
+input FilterUpdateManyMessageUserIdOperatorsInput {
+  gt: String
+  gte: String
+  lt: String
+  lte: String
+  ne: String
+  in: [String]
+  nin: [String]
+  regex: RegExpAsString
+  exists: Boolean
+}
+
+input FilterUpdateManyMessage_idOperatorsInput {
+  gt: MongoID
+  gte: MongoID
+  lt: MongoID
+  lte: MongoID
+  ne: MongoID
+  in: [MongoID]
+  nin: [MongoID]
+  exists: Boolean
+}
+
+input FilterUpdateManyMessageCreatedAtOperatorsInput {
+  gt: Date
+  gte: Date
+  lt: Date
+  lte: Date
+  ne: Date
+  in: [Date]
+  nin: [Date]
+  exists: Boolean
+}
+
+enum SortUpdateManyMessageInput {
+  _ID_ASC
+  _ID_DESC
+  USERID_ASC
+  USERID_DESC
+  CREATEDAT_ASC
+  CREATEDAT_DESC
+  CREATEDAT__UPDATEDAT_ASC
+  CREATEDAT__UPDATEDAT_DESC
+}
+
+type RemoveByIdMessagePayload {
+  """Document ID"""
+  recordId: MongoID
+
+  """Removed document"""
+  record: Message
+
+  """
+  Error that may occur during operation. If you request this field in GraphQL query, you will receive typed error in payload; otherwise error will be provided in root `errors` field of GraphQL response.
+  """
+  error: ErrorInterface
+}
+
+type RemoveOneMessagePayload {
+  """Document ID"""
+  recordId: MongoID
+
+  """Removed document"""
+  record: Message
+
+  """
+  Error that may occur during operation. If you request this field in GraphQL query, you will receive typed error in payload; otherwise error will be provided in root `errors` field of GraphQL response.
+  """
+  error: ErrorInterface
+}
+
+""""""
+input FilterRemoveOneMessageInput {
+  userId: String
+  content: String
+  _id: MongoID
+  updatedAt: Date
+  createdAt: Date
+
+  """List of *indexed* fields that can be filtered via operators."""
+  _operators: FilterRemoveOneMessageOperatorsInput
+  OR: [FilterRemoveOneMessageInput!]
+  AND: [FilterRemoveOneMessageInput!]
+}
+
+"""For performance reason this type contains only *indexed* fields."""
+input FilterRemoveOneMessageOperatorsInput {
+  userId: FilterRemoveOneMessageUserIdOperatorsInput
+  _id: FilterRemoveOneMessage_idOperatorsInput
+  createdAt: FilterRemoveOneMessageCreatedAtOperatorsInput
+}
+
+input FilterRemoveOneMessageUserIdOperatorsInput {
+  gt: String
+  gte: String
+  lt: String
+  lte: String
+  ne: String
+  in: [String]
+  nin: [String]
+  regex: RegExpAsString
+  exists: Boolean
+}
+
+input FilterRemoveOneMessage_idOperatorsInput {
+  gt: MongoID
+  gte: MongoID
+  lt: MongoID
+  lte: MongoID
+  ne: MongoID
+  in: [MongoID]
+  nin: [MongoID]
+  exists: Boolean
+}
+
+input FilterRemoveOneMessageCreatedAtOperatorsInput {
+  gt: Date
+  gte: Date
+  lt: Date
+  lte: Date
+  ne: Date
+  in: [Date]
+  nin: [Date]
+  exists: Boolean
+}
+
+enum SortRemoveOneMessageInput {
+  _ID_ASC
+  _ID_DESC
+  USERID_ASC
+  USERID_DESC
+  CREATEDAT_ASC
+  CREATEDAT_DESC
+  CREATEDAT__UPDATEDAT_ASC
+  CREATEDAT__UPDATEDAT_DESC
+}
+
+type RemoveManyMessagePayload {
+  """Affected documents number"""
+  numAffected: Int
+
+  """
+  Error that may occur during operation. If you request this field in GraphQL query, you will receive typed error in payload; otherwise error will be provided in root `errors` field of GraphQL response.
+  """
+  error: ErrorInterface
+}
+
+""""""
+input FilterRemoveManyMessageInput {
+  userId: String
+  content: String
+  _id: MongoID
+  updatedAt: Date
+  createdAt: Date
+
+  """List of *indexed* fields that can be filtered via operators."""
+  _operators: FilterRemoveManyMessageOperatorsInput
+  OR: [FilterRemoveManyMessageInput!]
+  AND: [FilterRemoveManyMessageInput!]
+}
+
+"""For performance reason this type contains only *indexed* fields."""
+input FilterRemoveManyMessageOperatorsInput {
+  userId: FilterRemoveManyMessageUserIdOperatorsInput
+  _id: FilterRemoveManyMessage_idOperatorsInput
+  createdAt: FilterRemoveManyMessageCreatedAtOperatorsInput
+}
+
+input FilterRemoveManyMessageUserIdOperatorsInput {
+  gt: String
+  gte: String
+  lt: String
+  lte: String
+  ne: String
+  in: [String]
+  nin: [String]
+  regex: RegExpAsString
+  exists: Boolean
+}
+
+input FilterRemoveManyMessage_idOperatorsInput {
+  gt: MongoID
+  gte: MongoID
+  lt: MongoID
+  lte: MongoID
+  ne: MongoID
+  in: [MongoID]
+  nin: [MongoID]
+  exists: Boolean
+}
+
+input FilterRemoveManyMessageCreatedAtOperatorsInput {
+  gt: Date
+  gte: Date
+  lt: Date
+  lte: Date
+  ne: Date
+  in: [Date]
+  nin: [Date]
+  exists: Boolean
+}
