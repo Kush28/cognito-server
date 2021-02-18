@@ -2,7 +2,9 @@
   "name": "cognito-server",
   "version": "1.0.0",
   "description": "Cognito Server",
-  "main": "index.js",
+  "engines": {
+    "node": "14.x"
+  },
   "scripts": {
     "build": "babel src --out-dir dist",
     "start": "node dist/index.js",
