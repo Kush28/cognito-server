@@ -9,11 +9,11 @@ router.use(authRestMiddleware);
 router.get('/auth', async (req, res, next) => {
     try {
         const { externalId, externalProvider } = req.user;
-        const { name, avatar } = await User.findByExternal(
+        const { id, name, avatar } = await User.findByExternal(
             externalId,
             externalProvider
         );
-        res.json({ name, avatar });
+        res.json({ id, name, avatar });
     } catch (error) {
         next(error);
     }

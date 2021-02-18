@@ -9,9 +9,9 @@ import './utils/db';
 import schema from './schema';
 import indexRouter from './routes';
 import { authGQLMiddleware } from './middlewares/auth.middleware';
+import { API_VERSION } from './config/constants';
 
 dotenv.config();
-const API_VERSION = process.env.API_VERSION;
 
 const app = express();
 
@@ -24,16 +24,15 @@ app.use(`/${API_VERSION}`, indexRouter);
 const server = new ApolloServer({
     schema,
     context: authGQLMiddleware,
-    cors: true,
-    playground: process.env.NODE_ENV === 'development' ? true : false,
-    introspection: true,
-    tracing: true,
     subscriptions: { path: '/graphql' },
 });
 
 server.applyMiddleware({
     app,
-    cors: true,
+    cors: {
+        origin: 'http://localhost:3000',
+        credentials: true,
+    },
     onHealthCheck: () =>
         new Promise((resolve, reject) => {
             if (mongoose.connection.readyState > 0) {

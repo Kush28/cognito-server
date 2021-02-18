@@ -1,5 +1,6 @@
 import passport from 'passport';
 import GoogleStrategy from 'passport-google-oauth20';
+import { API_VERSION } from '../config/constants';
 import User from '../controllers/user.controller';
 
 require('dotenv').config();
@@ -16,7 +17,7 @@ passport.deserializeUser(async (id, done) => {
 passport.use(
     new GoogleStrategy(
         {
-            callbackURL: `/${process.env.API_VERSION}/auth/google/redirect`,
+            callbackURL: `/${API_VERSION}/auth/google/redirect`,
             clientID: process.env.CLIENT_ID,
             clientSecret: process.env.CLIENT_SECRET,
         },
