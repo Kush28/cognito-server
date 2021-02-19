@@ -6,7 +6,7 @@
     "node": "14.x"
   },
   "scripts": {
-    "build": "babel src --out-dir dist && babel src/views --out-dir dist/views --copy-files",
+    "build": "babel src --out-dir dist && babel src/views --out-dir dist/views --copy-files && babel src/public --out-dir dist/public --copy-files",
     "start": "node dist/index.js",
     "dev": "nodemon --exec babel-node src/index.js",
     "prettier": "prettier --config ./.prettierrc --write \"**/*.js\"",
